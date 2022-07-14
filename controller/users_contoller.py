@@ -1,5 +1,6 @@
 import flask
 from flask import Blueprint, request
+from service.users_service import UsersService
 
 uc = Blueprint("user_controller", __name__)
 
@@ -13,4 +14,4 @@ def get_home_page():
 
 @uc.route('/users/<user_id>')
 def get_user_reimbursement(user_id):
-    return "At controller Layer"
+    return UsersService.get_user_reimbursement(user_id)
