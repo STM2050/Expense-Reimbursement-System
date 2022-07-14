@@ -23,22 +23,6 @@ class UserDao:
                 users_all_list = cur.fetchall()
                 new_list = []
 
-                # for user in users_all_list:
-                #     for data in user:
-                #         # print(f"{data} is type {type(data)}")
-                #         if type(data) == bytes:
-                #             my_img = data
-                #             json_str = json.dumps(my_img.decode('utf-8'))
-                #             new_list.append(json_str)
-                #         else:
-                #             new_list.append(data)
-                # print(f"new_list: {new_list}")
-                # # print(f"Fetch Dats is {users_all_list[1][-3]}")
-                # # print(f"Fetch Dats is {type(users_all_list[1][-3])}")
-                # # print(f"Data type is {type(users_all_list[0])}")
-                # return{"success":  new_list}
-                # # return {'success': f"{list(map(lambda x: {'emp': x}, users_all_list))}"}
-
                 for user in users_all_list:
                     user_list = list(user)
                     new_list.append(user_list)
