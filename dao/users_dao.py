@@ -17,9 +17,7 @@ class UserDao:
                              password=API_PASSWORD) as conn:
             with conn.cursor() as cur:
                 cur.execute("select * from expense_reimbursement_system.reimbursements;")
-                # cur.execute(
-                #     "select reimbursement_amount, type, description, reimb_author from expense_reimbursement_system.reimbursements;")
-                # print(f"cur is {cur}")
+
                 users_all_list = cur.fetchall()
                 new_list = []
 
@@ -36,6 +34,4 @@ class UserDao:
                             json_str = json.dumps(my_img.decode('utf-8'))
                             user.append(json_str)
 
-                print(new_list)
-                print(f"num of elements = {len(new_list)}")
                 return {"success": new_list}
