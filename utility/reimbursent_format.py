@@ -15,8 +15,8 @@ class ReimbursementUtility:
             type_of_expense = user[5]
             description = user[6]
             receipt_img = user[9]
-            reimb_author = user[8]
-            reimb_resolver = user[7]
+            reimb_author = user[7]
+            reimb_resolver = user[8]
 
             user_reimbursements_formatted_in_dict = Reimbursement(reimb_id, reimbursement_amount, submitted_at,
                                                                   resolved_at, status, type_of_expense,

@@ -8,4 +8,4 @@ class UsersService:
         user_reimbursements = UserDao.get_user_reimbursement(user_id)
         user_reimbursements_formatted = ReimbursementUtility.reimbursement_format(user_reimbursements)
 
-        return {"user_reimbursements": user_reimbursements_formatted}
+        return {f"Reimbursement details of {user_id}": user_reimbursements_formatted}

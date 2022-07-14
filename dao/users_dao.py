@@ -16,7 +16,7 @@ class UserDao:
         with psycopg.connect(host=API_HOST, port=API_PORT, dbname=API_DBNAME, user=API_USER,
                              password=API_PASSWORD) as conn:
             with conn.cursor() as cur:
-                cur.execute("select * from expense_reimbursement_system.reimbursements;")
+                cur.execute("select * from expense_reimbursement_system.reimbursements where reimb_author=%s", (user_id,))
 
                 users_all_list = cur.fetchall()
                 new_list = []
