@@ -4,9 +4,8 @@ from model.reimbursement import Reimbursement
 class ReimbursementUtility:
     @staticmethod
     def reimbursement_format(user_reimbursements):
-        user_reimbursements_list = user_reimbursements["success"]
         user_reimbursements_formatted = []
-        for user in user_reimbursements_list:
+        for user in user_reimbursements:
             reimb_id = user[0]
             reimbursement_amount = user[1]
             submitted_at = user[2]
