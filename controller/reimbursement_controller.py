@@ -25,4 +25,4 @@ def get_user_reimbursement(user_id):
 def create_reimbursement(user_id):
     data = request.get_json()
     print(data)
-    return f"Create Reimbursement at Controller layer for user_id {user_id} and data = {data}"
+    return ReimbursementService.create_reimbursement(user_id, data)

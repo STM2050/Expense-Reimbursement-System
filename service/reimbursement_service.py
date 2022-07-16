@@ -16,3 +16,7 @@ class ReimbursementService:
         user_reimbursements_formatted = ReimbursementUtility.reimbursement_format(user_reimbursements)
 
         return {f"Reimbursement details of {user_id}": user_reimbursements_formatted}
+
+    @staticmethod
+    def create_reimbursement(user_id, data):
+        return f"Create Reimbursement at Service layer for user_id {user_id} and data = {data}"
