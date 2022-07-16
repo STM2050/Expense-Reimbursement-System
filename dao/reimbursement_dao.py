@@ -66,8 +66,9 @@ class ReimbursementDao:
             with psycopg.connect(host=API_HOST, port=API_PORT, dbname=API_DBNAME, user=API_USER,
                                  password=API_PASSWORD) as conn:
                 with conn.cursor() as cur:
-                    cur.execute("select * from expense_reimbursement_system.reimbursements where reimb_author=%s and status=%s",
-                                (user_id, args))
+                    cur.execute(
+                        "select * from expense_reimbursement_system.reimbursements where reimb_author=%s and status=%s",
+                        (user_id, args))
 
                     users_all_list = cur.fetchall()
                     new_list = []
@@ -120,3 +121,7 @@ class ReimbursementDao:
                             (user_id, role))
                 user_details = cur.fetchall()
                 return user_details
+
+    @staticmethod
+    def create_reimbursement(user_id, data):
+        return f"Create Reimbursement at controller layer for user_id {user_id} and data = {data}"
