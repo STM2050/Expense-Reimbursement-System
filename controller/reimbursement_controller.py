@@ -24,5 +24,4 @@ def get_user_reimbursement(user_id):
 @rc.route('/users/<user_id>', methods=['POST'])
 def create_reimbursement(user_id):
     data = request.get_json()
-    print(data)
     return ReimbursementService.create_reimbursement(user_id, data)
