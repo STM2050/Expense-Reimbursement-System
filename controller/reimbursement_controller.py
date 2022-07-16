@@ -14,4 +14,15 @@ def get_home_page():
 
 @rc.route('/users/<user_id>')
 def get_user_reimbursement(user_id):
-    return ReimbursementService.get_user_reimbursement(user_id)
+    args = request.args.get("status")
+    print(args)
+    # if args == "pending":
+    #     return ReimbursementService.get_user_reimbursement(user_id, args)
+    # elif args == "approved":
+    #     return f"Args {args} at Controller"
+    # elif args == "denied":
+    #     return f"Args {args} at Controller"
+    if args:
+        return ReimbursementService.get_user_reimbursement_args(user_id, args)
+    else:
+        return ReimbursementService.get_user_reimbursement(user_id)
