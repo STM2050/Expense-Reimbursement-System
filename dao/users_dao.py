@@ -18,6 +18,7 @@ class UsersDao:
                             (username, password))
 
                 user_info = cur.fetchone()
+                print(user_info)
 
                 if not user_info:
                     return None
