@@ -1,6 +1,8 @@
 from flask import Blueprint, request
 from service.users_service import UserService
 from exception.user_name_not_found import UserNotFoundError
+from exception.log_in_error import LogInError
+
 
 uc = Blueprint("user_controller", __name__)
 
@@ -12,5 +14,5 @@ def user_login():
     password = data["password"]
     try:
         return UserService.user_login(username, password)
-    except UserNotFoundError as e:
-        return str(e)
+    except LogInError as e:
+        return str(e), 401
