@@ -124,16 +124,19 @@ class ReimbursementDao:
 
     @staticmethod
     def create_reimbursement(user_id, data):
-        reimbursement_amount = data["reimbursement_amount"]
-        type_of_expense = data["type_of_expense"]
-        description = data["description"]
-        receipt_img = data["receipt_img"]
-        with psycopg.connect(host=API_HOST, port=API_PORT, dbname=API_DBNAME, user=API_USER,
-                             password=API_PASSWORD) as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "insert into expense_reimbursement_system.reimbursements(reimbursement_amount, type, description, receipt_img ,reimb_author) values(%s, %s, %s, %s,%s) RETURNING *",
-                    (reimbursement_amount, type_of_expense, description, receipt_img, user_id))
-                reimbursement_just_created = cur.fetchone()
-                print(reimbursement_just_created)
-                return "New reimbursement successfully created"
+        try:
+            reimbursement_amount = data["reimbursement_amount"]
+            type_of_expense = data["type_of_expense"]
+            description = data["description"]
+            receipt_img = data["receipt_img"]
+            with psycopg.connect(host=API_HOST, port=API_PORT, dbname=API_DBNAME, user=API_USER,
+                                 password=API_PASSWORD) as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "insert into expense_reimbursement_system.reimbursements(reimbursement_amount, type, description, receipt_img ,reimb_author) values(%s, %s, %s, %s,%s) RETURNING *",
+                        (reimbursement_amount, type_of_expense, description, receipt_img, user_id))
+                    reimbursement_just_created = cur.fetchone()
+                    print(reimbursement_just_created)
+                    return "New reimbursement successfully created"
+        except psycopg.errors.ForeignKeyViolation:
+            return None

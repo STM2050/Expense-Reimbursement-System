@@ -1,6 +1,6 @@
 from dao.reimbursement_dao import ReimbursementDao
 from utility.reimbursent_format import ReimbursementUtility
-
+from exception.user_name_not_found import UserNotFoundError
 
 class ReimbursementService:
     @staticmethod
@@ -19,4 +19,7 @@ class ReimbursementService:
 
     @staticmethod
     def create_reimbursement(user_id, data):
-        return ReimbursementDao.create_reimbursement(user_id, data)
+        new_reimbursement = ReimbursementDao.create_reimbursement(user_id, data)
+        if new_reimbursement:
+            return new_reimbursement
+        raise UserNotFoundError(f"Username {user_id} not found !!!")

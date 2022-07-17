@@ -1,6 +1,7 @@
 import flask
 from flask import Blueprint, request
 from service.reimbursement_service import ReimbursementService
+from exception.user_name_not_found import UserNotFoundError
 
 rc = Blueprint("reimbursement_controller", __name__)
 
@@ -24,4 +25,7 @@ def get_user_reimbursement(user_id):
 @rc.route('/users/<user_id>', methods=['POST'])
 def create_reimbursement(user_id):
     data = request.get_json()
-    return ReimbursementService.create_reimbursement(user_id, data)
+    try:
+        return ReimbursementService.create_reimbursement(user_id, data), 201
+    except UserNotFoundError as e:
+        return{"message": str(e)}, 404
