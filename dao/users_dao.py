@@ -1,5 +1,6 @@
 import psycopg
 from decouple import config  # to create environment variable.
+from model.user import User
 
 API_HOST = config('host')
 API_PORT = config('port')
@@ -18,11 +19,12 @@ class UsersDao:
                             (username, password))
 
                 user_info = cur.fetchone()
-                print(user_info)
 
                 if not user_info:
                     return None
 
-                return {"user_info": user_info}
-
-
+                username = user_info[1]
+                first_name = user_info[3]
+                last_name = user_info[4]
+                role = user_info[6]
+                return User(username, first_name, last_name, role)
