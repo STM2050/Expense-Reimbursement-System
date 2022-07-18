@@ -6,8 +6,10 @@ from flask_cors import CORS
 
 if __name__ == "__main__":
     app = Flask(__name__)
-    CORS(app)  # It instructs our webserver to tell browser that any origin is allowed. By origin, we mean the source
+    CORS(app, supports_credentials=True)  # It instructs our webserver to tell browser that any origin is allowed. By origin, we mean the source
     # where the HTML, CSS and JS are originating from
+    # https://flask-cors.readthedocs.io/en/latest/api.html
+
     app.config["SESSION_PERMANENT"] = False
     app.config["SESSION_TYPE"] = "filesystem"
     Session(app)

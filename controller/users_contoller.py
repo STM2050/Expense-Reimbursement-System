@@ -26,9 +26,15 @@ def user_login():
 @uc.route("/loginstatus")
 def loginstatus():
     if session.get("user_info"):
-        return{
+        return {
             "message": "You are logged in",
             "logged_in_user": session.get("user_info")
         }
     else:
         return "You are not logged in"
+
+
+@uc.route("/logout", methods=["POST"])
+def logout():
+    session.clear()
+    return {"message": "Successfully logged out"}
