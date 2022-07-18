@@ -1,5 +1,5 @@
 import flask
-from flask import Blueprint, request
+from flask import Blueprint, request, session
 from service.reimbursement_service import ReimbursementService
 from exception.user_name_not_found import UserNotFoundError
 
@@ -15,11 +15,12 @@ def get_home_page():
 
 @rc.route('/users/<user_id>')
 def get_user_reimbursement(user_id):
-    args = request.args.get("status")
-    if args:
-        return ReimbursementService.get_user_reimbursement_args(user_id, args)
-    else:
-        return ReimbursementService.get_user_reimbursement(user_id)
+    if session["user_info"]["username"] == user_id:
+        args = request.args.get("status")
+        if args:
+            return ReimbursementService.get_user_reimbursement_args(user_id, args)
+        else:
+            return ReimbursementService.get_user_reimbursement(user_id)
 
 
 @rc.route('/users/<user_id>', methods=['POST'])
