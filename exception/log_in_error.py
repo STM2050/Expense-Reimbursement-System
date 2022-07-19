@@ -1,0 +1,2 @@
+class LogInError(Exception):
+    pass
