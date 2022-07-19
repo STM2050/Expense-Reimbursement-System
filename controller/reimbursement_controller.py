@@ -29,4 +29,10 @@ def create_reimbursement(user_id):
     try:
         return ReimbursementService.create_reimbursement(user_id, data), 201
     except UserNotFoundError as e:
-        return{"message": str(e)}, 404
+        return {"message": str(e)}, 404
+
+
+@rc.route('/users/<user_id>', methods=['PUT'])
+def update_reimbursement(user_id):
+    data = request.get_json()
+    return "Update Request at Controller Layer"
