@@ -34,5 +34,7 @@ def create_reimbursement(user_id):
 
 @rc.route('/users/<user_id>', methods=['PUT'])
 def update_reimbursement(user_id):
-    data = request.get_json()
-    return "Update Request at Controller Layer"
+    if session["user_info"]["username"] == user_id:
+        data = request.get_json()
+        return ReimbursementService.update_reimbursement(user_id, data)
+

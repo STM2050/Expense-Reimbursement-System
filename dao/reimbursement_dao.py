@@ -1,6 +1,7 @@
 from decouple import config  # to create environment variable.
 import psycopg
 import json  # to jsonify image which is stored in bytea format in the database
+from datetime import datetime as dt  # to use in resolved_at column which has a data type of timestamptz in postgreSQL
 
 API_HOST = config('host')
 API_PORT = config('port')
@@ -140,3 +141,20 @@ class ReimbursementDao:
                     return "New reimbursement successfully created"
         except psycopg.errors.ForeignKeyViolation:
             return None
+
+    @staticmethod
+    def update_reimbursement(user_id, reimb_author, reimb_id, status):
+        if ReimbursementDao.check_if_finance_manager(user_id):
+            with psycopg.connect(host=API_HOST, port=API_PORT, dbname=API_DBNAME, user=API_USER,
+                                 password=API_PASSWORD) as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "UPDATE expense_reimbursement_system.reimbursements SET status = %s, resolved_at=%s WHERE reimb_id = %s AND reimb_author=%s RETURNING *",
+                        (status, dt.now(), reimb_id, reimb_author))
+                    updated_reimbursement_row = cur.fetchone()
+
+                    if not updated_reimbursement_row:
+                        return None
+
+                    return {
+                        "message": f"Reimbursement request having reimbursement id number {reimb_id} of {reimb_author} has been {status}"}
