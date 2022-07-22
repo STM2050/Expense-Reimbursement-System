@@ -25,11 +25,12 @@ def get_user_reimbursement(user_id):
 
 @rc.route('/users/<user_id>', methods=['POST'])
 def create_reimbursement(user_id):
-    data = request.get_json()
-    try:
-        return ReimbursementService.create_reimbursement(user_id, data), 201
-    except UserNotFoundError as e:
-        return {"message": str(e)}, 404
+    if session["user_info"]["username"] == user_id:
+        data = request.get_json()
+        try:
+            return ReimbursementService.create_reimbursement(user_id, data), 201
+        except UserNotFoundError as e:
+            return {"message": str(e)}, 404
 
 
 @rc.route('/users/<user_id>', methods=['PUT'])
@@ -37,4 +38,3 @@ def update_reimbursement(user_id):
     if session["user_info"]["username"] == user_id:
         data = request.get_json()
         return ReimbursementService.update_reimbursement(user_id, data)
-
