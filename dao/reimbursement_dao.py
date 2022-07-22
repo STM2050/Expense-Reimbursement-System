@@ -34,7 +34,7 @@ class ReimbursementDao:
                                 index_of_each_item = user.index(data)
                                 user.pop(index_of_each_item)
                                 json_str = json.dumps(my_img.decode('utf-8'))
-                                user.append(json_str)
+                                user.insert(index_of_each_item, json_str)
 
                     return new_list
         else:
@@ -57,7 +57,7 @@ class ReimbursementDao:
                                 index_of_each_item = user.index(data)
                                 user.pop(index_of_each_item)
                                 json_str = json.dumps(my_img.decode('utf-8'))
-                                user.append(json_str)
+                                user.insert(index_of_each_item, json_str)
 
                     return new_list
 
@@ -85,8 +85,8 @@ class ReimbursementDao:
                                 index_of_each_item = user.index(data)
                                 user.pop(index_of_each_item)
                                 json_str = json.dumps(my_img.decode('utf-8'))
-                                user.append(json_str)
-
+                                user.insert(index_of_each_item, json_str)
+                    print(new_list)
                     return new_list
         else:
             with psycopg.connect(host=API_HOST, port=API_PORT, dbname=API_DBNAME, user=API_USER,
@@ -108,8 +108,9 @@ class ReimbursementDao:
                                 index_of_each_item = user.index(data)
                                 user.pop(index_of_each_item)
                                 json_str = json.dumps(my_img.decode('utf-8'))
-                                user.append(json_str)
+                                user.insert(index_of_each_item, json_str)
 
+                    print(new_list)
                     return new_list
 
     @staticmethod
@@ -129,13 +130,13 @@ class ReimbursementDao:
             reimbursement_amount = data["reimbursement_amount"]
             type_of_expense = data["type_of_expense"]
             description = data["description"]
-            receipt_img = data["receipt_img"]
+            # receipt_img = data["receipt_img"]
             with psycopg.connect(host=API_HOST, port=API_PORT, dbname=API_DBNAME, user=API_USER,
                                  password=API_PASSWORD) as conn:
                 with conn.cursor() as cur:
                     cur.execute(
-                        "insert into expense_reimbursement_system.reimbursements(reimbursement_amount, type, description, receipt_img ,reimb_author) values(%s, %s, %s, %s,%s) RETURNING *",
-                        (reimbursement_amount, type_of_expense, description, receipt_img, user_id))
+                        "insert into expense_reimbursement_system.reimbursements(reimbursement_amount, type, description,  reimb_author) values(%s, %s, %s, %s) RETURNING *",
+                        (reimbursement_amount, type_of_expense, description, user_id))
                     reimbursement_just_created = cur.fetchone()
                     print(reimbursement_just_created)
                     return "New reimbursement successfully created"
